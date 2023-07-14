@@ -1,7 +1,7 @@
 package main
 
 import (
-	length "api-gateway/length-service/kitex_gen/length/lengthservice"
+	api "api-gateway/length-service/kitex_gen/length/lengthservice"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
 	etcd "github.com/kitex-contrib/registry-etcd"
@@ -17,7 +17,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	svr := length.NewServer(
+	svr := api.NewServer(
 		new(LengthServiceImpl),
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "LengthService"}),
 		server.WithRegistry(r), // register service on etcd registry

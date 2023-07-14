@@ -3,13 +3,16 @@
 package gateway
 
 import (
+	"api-gateway/global"
 	"api-gateway/hertz-http-server/biz/model/conversion"
 	"api-gateway/hertz-http-server/biz/model/length"
 	"api-gateway/hertz-http-server/biz/model/reverse"
 	"api-gateway/hertz-http-server/biz/model/substring/api"
 	lengthService "api-gateway/length-service/kitex_gen/length"
+	reverseService "api-gateway/reverse-service/kitex_gen/reverse"
 	"api-gateway/utils"
 	"context"
+	"github.com/cloudwego/kitex/pkg/klog"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -26,18 +29,14 @@ func CalculateLength(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	lengthClient, err := utils.GenerateClient("LengthService")
-	if err != nil {
-		panic(err)
-	}
-
 	// 将 req params 绑定到 RPC 请求结构（遵循 RPC 服务 IDL 中声明的请求格式
 	reqRpc := &lengthService.LengthRequest{
 		InputString: req.InputString,
 	}
 
 	var respRpc lengthService.LengthResponse
-	err = utils.MakeRpcRequest(ctx, lengthClient, "calculateLength", reqRpc, &respRpc)
+	klog.Info(global.LengthCli)
+	err = utils.MakeRpcRequest(ctx, global.LengthCli, "calculateLength", reqRpc, &respRpc)
 	if err != nil {
 		panic(err)
 	}
@@ -60,7 +59,24 @@ func ReverseString(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(reverse.ReverseResponse)
+	reverseClient, err := utils.GenerateClient("ReverseService")
+	if err != nil {
+		panic(err)
+	}
+
+	reqRpc := &reverseService.ReverseRequest{
+		InputString: req.InputString,
+	}
+
+	var respRpc reverseService.ReverseResponse
+	err = utils.MakeRpcRequest(ctx, reverseClient, "reverseString", reqRpc, &respRpc)
+	if err != nil {
+		panic(err)
+	}
+
+	resp := &reverse.ReverseResponse{
+		ReversedString: respRpc.ReversedString,
+	}
 
 	c.JSON(consts.StatusOK, resp)
 }

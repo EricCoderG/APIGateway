@@ -3,12 +3,39 @@
 package main
 
 import (
+	"api-gateway/global"
+	"api-gateway/utils"
+	"errors"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
 func main() {
 	h := server.Default(server.WithHostPorts("127.0.0.1:8088"))
-
+	initClient()
 	register(h)
 	h.Spin()
+}
+
+func initClient() {
+	var err = errors.New("new error")
+	global.LengthCli, err = utils.GenerateClient("LengthService")
+	if err != nil {
+		panic(err)
+	}
+
+	global.ReverseCli, err = utils.GenerateClient("ReverseService")
+	if err != nil {
+		panic(err)
+	}
+
+	global.SubstringCli, err = utils.GenerateClient("SubstringService")
+	if err != nil {
+		panic(err)
+	}
+
+	global.ConversionCli, err = utils.GenerateClient("ConversionService")
+	if err != nil {
+		panic(err)
+	}
+
 }

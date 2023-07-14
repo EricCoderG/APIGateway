@@ -31,7 +31,7 @@ func GenerateClient(serviceName string) (genericclient.Client, error) {
 		panic(err)
 	}
 
-	// 转换为 Thrift 泛化形式
+	// 转换为 Thrift JSON泛化形式
 	g, err := generic.JSONThriftGeneric(p)
 	if err != nil {
 		panic(err)
@@ -51,13 +51,13 @@ func GenerateClient(serviceName string) (genericclient.Client, error) {
 	return client, nil
 }
 
-func MakeRpcRequest(ctx context.Context, kClient genericclient.Client, methodName string, request interface{}, response interface{}) error {
+func MakeRpcRequest(ctx context.Context, gClient genericclient.Client, methodName string, request interface{}, response interface{}) error {
 	stringedReq, err := jsonStringify(request)
 	if err != nil {
 		panic(err)
 	}
 
-	respRpc, err := kClient.GenericCall(ctx, methodName, stringedReq)
+	respRpc, err := gClient.GenericCall(ctx, methodName, stringedReq)
 	if err != nil {
 		panic(err)
 	}
