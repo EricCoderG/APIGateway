@@ -49,14 +49,14 @@ func ReverseString(ctx context.Context, c *app.RequestContext) {
 // @router /convert [POST]
 func ConvertCase(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req conversion.CaseConversionRequest
+	var req conversion.ConversionRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
 		return
 	}
 
-	resp := new(conversion.CaseConversionResponse)
+	resp := new(conversion.ConversionResponse)
 
 	c.JSON(consts.StatusOK, resp)
 }

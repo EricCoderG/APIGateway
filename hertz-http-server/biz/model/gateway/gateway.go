@@ -17,7 +17,7 @@ type GatewayService interface {
 
 	ReverseString(ctx context.Context, req *reverse.ReverseRequest) (r *reverse.ReverseResponse, err error)
 
-	ConvertCase(ctx context.Context, req *conversion.CaseConversionRequest) (r *conversion.CaseConversionResponse, err error)
+	ConvertCase(ctx context.Context, req *conversion.ConversionRequest) (r *conversion.ConversionResponse, err error)
 
 	FindSubstring(ctx context.Context, req *api.SubstringRequest) (r *api.SubstringResponse, err error)
 }
@@ -66,7 +66,7 @@ func (p *GatewayServiceClient) ReverseString(ctx context.Context, req *reverse.R
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *GatewayServiceClient) ConvertCase(ctx context.Context, req *conversion.CaseConversionRequest) (r *conversion.CaseConversionResponse, err error) {
+func (p *GatewayServiceClient) ConvertCase(ctx context.Context, req *conversion.ConversionRequest) (r *conversion.ConversionResponse, err error) {
 	var _args GatewayServiceConvertCaseArgs
 	_args.Req = req
 	var _result GatewayServiceConvertCaseResult
@@ -244,7 +244,7 @@ func (p *gatewayServiceProcessorConvertCase) Process(ctx context.Context, seqId 
 	iprot.ReadMessageEnd()
 	var err2 error
 	result := GatewayServiceConvertCaseResult{}
-	var retval *conversion.CaseConversionResponse
+	var retval *conversion.ConversionResponse
 	if retval, err2 = p.handler.ConvertCase(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing convertCase: "+err2.Error())
 		oprot.WriteMessageBegin("convertCase", thrift.EXCEPTION, seqId)
@@ -906,16 +906,16 @@ func (p *GatewayServiceReverseStringResult) String() string {
 }
 
 type GatewayServiceConvertCaseArgs struct {
-	Req *conversion.CaseConversionRequest `thrift:"req,1"`
+	Req *conversion.ConversionRequest `thrift:"req,1"`
 }
 
 func NewGatewayServiceConvertCaseArgs() *GatewayServiceConvertCaseArgs {
 	return &GatewayServiceConvertCaseArgs{}
 }
 
-var GatewayServiceConvertCaseArgs_Req_DEFAULT *conversion.CaseConversionRequest
+var GatewayServiceConvertCaseArgs_Req_DEFAULT *conversion.ConversionRequest
 
-func (p *GatewayServiceConvertCaseArgs) GetReq() (v *conversion.CaseConversionRequest) {
+func (p *GatewayServiceConvertCaseArgs) GetReq() (v *conversion.ConversionRequest) {
 	if !p.IsSetReq() {
 		return GatewayServiceConvertCaseArgs_Req_DEFAULT
 	}
@@ -990,7 +990,7 @@ ReadStructEndError:
 }
 
 func (p *GatewayServiceConvertCaseArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Req = conversion.NewCaseConversionRequest()
+	p.Req = conversion.NewConversionRequest()
 	if err := p.Req.Read(iprot); err != nil {
 		return err
 	}
@@ -1051,16 +1051,16 @@ func (p *GatewayServiceConvertCaseArgs) String() string {
 }
 
 type GatewayServiceConvertCaseResult struct {
-	Success *conversion.CaseConversionResponse `thrift:"success,0,optional"`
+	Success *conversion.ConversionResponse `thrift:"success,0,optional"`
 }
 
 func NewGatewayServiceConvertCaseResult() *GatewayServiceConvertCaseResult {
 	return &GatewayServiceConvertCaseResult{}
 }
 
-var GatewayServiceConvertCaseResult_Success_DEFAULT *conversion.CaseConversionResponse
+var GatewayServiceConvertCaseResult_Success_DEFAULT *conversion.ConversionResponse
 
-func (p *GatewayServiceConvertCaseResult) GetSuccess() (v *conversion.CaseConversionResponse) {
+func (p *GatewayServiceConvertCaseResult) GetSuccess() (v *conversion.ConversionResponse) {
 	if !p.IsSetSuccess() {
 		return GatewayServiceConvertCaseResult_Success_DEFAULT
 	}
@@ -1135,7 +1135,7 @@ ReadStructEndError:
 }
 
 func (p *GatewayServiceConvertCaseResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = conversion.NewCaseConversionResponse()
+	p.Success = conversion.NewConversionResponse()
 	if err := p.Success.Read(iprot); err != nil {
 		return err
 	}

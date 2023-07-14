@@ -6,18 +6,26 @@ import (
 	"context"
 	"fmt"
 	"github.com/apache/thrift/lib/go/thrift"
+	"strings"
 )
 
 type ConversionRequest struct {
-	InputString string `thrift:"inputString,1,required" form:"inputString,required" json:"inputString,required" query:"inputString,required"`
+	InputString string `thrift:"inputString,1,required" frugal:"1,required,string" json:"inputString"`
 }
 
 func NewConversionRequest() *ConversionRequest {
 	return &ConversionRequest{}
 }
 
+func (p *ConversionRequest) InitDefault() {
+	*p = ConversionRequest{}
+}
+
 func (p *ConversionRequest) GetInputString() (v string) {
 	return p.InputString
+}
+func (p *ConversionRequest) SetInputString(val string) {
+	p.InputString = val
 }
 
 var fieldIDToName_ConversionRequest = map[int16]string{
@@ -153,16 +161,43 @@ func (p *ConversionRequest) String() string {
 	return fmt.Sprintf("ConversionRequest(%+v)", *p)
 }
 
+func (p *ConversionRequest) DeepEqual(ano *ConversionRequest) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.InputString) {
+		return false
+	}
+	return true
+}
+
+func (p *ConversionRequest) Field1DeepEqual(src string) bool {
+
+	if strings.Compare(p.InputString, src) != 0 {
+		return false
+	}
+	return true
+}
+
 type ConversionResponse struct {
-	ConvertedString string `thrift:"convertedString,1,required" form:"convertedString,required" json:"convertedString,required" query:"convertedString,required"`
+	ConvertedString string `thrift:"convertedString,1,required" frugal:"1,required,string" json:"convertedString"`
 }
 
 func NewConversionResponse() *ConversionResponse {
 	return &ConversionResponse{}
 }
 
+func (p *ConversionResponse) InitDefault() {
+	*p = ConversionResponse{}
+}
+
 func (p *ConversionResponse) GetConvertedString() (v string) {
 	return p.ConvertedString
+}
+func (p *ConversionResponse) SetConvertedString(val string) {
+	p.ConvertedString = val
 }
 
 var fieldIDToName_ConversionResponse = map[int16]string{
@@ -298,6 +333,26 @@ func (p *ConversionResponse) String() string {
 	return fmt.Sprintf("ConversionResponse(%+v)", *p)
 }
 
+func (p *ConversionResponse) DeepEqual(ano *ConversionResponse) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.ConvertedString) {
+		return false
+	}
+	return true
+}
+
+func (p *ConversionResponse) Field1DeepEqual(src string) bool {
+
+	if strings.Compare(p.ConvertedString, src) != 0 {
+		return false
+	}
+	return true
+}
+
 type ConversionService interface {
 	ConvertCase(ctx context.Context, req *ConversionRequest) (r *ConversionResponse, err error)
 }
@@ -428,11 +483,15 @@ func (p *conversionServiceProcessorConvertCase) Process(ctx context.Context, seq
 }
 
 type ConversionServiceConvertCaseArgs struct {
-	Req *ConversionRequest `thrift:"req,1"`
+	Req *ConversionRequest `thrift:"req,1" frugal:"1,default,ConversionRequest" json:"req"`
 }
 
 func NewConversionServiceConvertCaseArgs() *ConversionServiceConvertCaseArgs {
 	return &ConversionServiceConvertCaseArgs{}
+}
+
+func (p *ConversionServiceConvertCaseArgs) InitDefault() {
+	*p = ConversionServiceConvertCaseArgs{}
 }
 
 var ConversionServiceConvertCaseArgs_Req_DEFAULT *ConversionRequest
@@ -442,6 +501,9 @@ func (p *ConversionServiceConvertCaseArgs) GetReq() (v *ConversionRequest) {
 		return ConversionServiceConvertCaseArgs_Req_DEFAULT
 	}
 	return p.Req
+}
+func (p *ConversionServiceConvertCaseArgs) SetReq(val *ConversionRequest) {
+	p.Req = val
 }
 
 var fieldIDToName_ConversionServiceConvertCaseArgs = map[int16]string{
@@ -572,12 +634,36 @@ func (p *ConversionServiceConvertCaseArgs) String() string {
 	return fmt.Sprintf("ConversionServiceConvertCaseArgs(%+v)", *p)
 }
 
+func (p *ConversionServiceConvertCaseArgs) DeepEqual(ano *ConversionServiceConvertCaseArgs) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.Req) {
+		return false
+	}
+	return true
+}
+
+func (p *ConversionServiceConvertCaseArgs) Field1DeepEqual(src *ConversionRequest) bool {
+
+	if !p.Req.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
 type ConversionServiceConvertCaseResult struct {
-	Success *ConversionResponse `thrift:"success,0,optional"`
+	Success *ConversionResponse `thrift:"success,0,optional" frugal:"0,optional,ConversionResponse" json:"success,omitempty"`
 }
 
 func NewConversionServiceConvertCaseResult() *ConversionServiceConvertCaseResult {
 	return &ConversionServiceConvertCaseResult{}
+}
+
+func (p *ConversionServiceConvertCaseResult) InitDefault() {
+	*p = ConversionServiceConvertCaseResult{}
 }
 
 var ConversionServiceConvertCaseResult_Success_DEFAULT *ConversionResponse
@@ -587,6 +673,9 @@ func (p *ConversionServiceConvertCaseResult) GetSuccess() (v *ConversionResponse
 		return ConversionServiceConvertCaseResult_Success_DEFAULT
 	}
 	return p.Success
+}
+func (p *ConversionServiceConvertCaseResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ConversionResponse)
 }
 
 var fieldIDToName_ConversionServiceConvertCaseResult = map[int16]string{
@@ -717,4 +806,24 @@ func (p *ConversionServiceConvertCaseResult) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("ConversionServiceConvertCaseResult(%+v)", *p)
+}
+
+func (p *ConversionServiceConvertCaseResult) DeepEqual(ano *ConversionServiceConvertCaseResult) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field0DeepEqual(ano.Success) {
+		return false
+	}
+	return true
+}
+
+func (p *ConversionServiceConvertCaseResult) Field0DeepEqual(src *ConversionResponse) bool {
+
+	if !p.Success.DeepEqual(src) {
+		return false
+	}
+	return true
 }

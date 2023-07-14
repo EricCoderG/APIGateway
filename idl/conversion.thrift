@@ -1,13 +1,13 @@
 namespace go conversion
 
-struct CaseConversionRequest {
+struct ConversionRequest {
     1: required string inputString;
 }
 
-struct CaseConversionResponse {
+struct ConversionResponse {
     1: required string convertedString;
 }
 
-service CaseConversionService {
-    CaseConversionResponse convertCase(1: CaseConversionRequest req) (api.post="/convert");
+service ConversionService {
+    ConversionResponse convertCase(1: ConversionRequest req) (api.post="/convert");
 }

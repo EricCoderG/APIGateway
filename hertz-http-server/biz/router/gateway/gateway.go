@@ -3,7 +3,7 @@
 package gateway
 
 import (
-	"api-gateway/hertz-http-server/biz/handler/gateway"
+	gateway "api-gateway/hertz-http-server/biz/handler/gateway"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
