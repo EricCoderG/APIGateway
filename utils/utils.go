@@ -26,7 +26,7 @@ func GenerateClient(serviceName string) (genericclient.Client, error) {
 
 	// 导入idl（泛化调用）
 	workDir, _ := os.Getwd()
-	p, err := generic.NewThriftFileProvider(workDir + "/idl/gateway.thrift")
+	p, err := generic.NewThriftFileProvider(workDir + "/../idl/gateway.thrift")
 	if err != nil {
 		panic(err)
 	}
