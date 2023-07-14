@@ -10,6 +10,8 @@ type LengthServiceImpl struct{}
 
 // CalculateLength implements the LengthServiceImpl interface.
 func (s *LengthServiceImpl) CalculateLength(ctx context.Context, req *length.LengthRequest) (resp *length.LengthResponse, err error) {
-	// TODO: Your code here...
+	resp = &length.LengthResponse{
+		Length: int32(len(req.InputString)),
+	}
 	return
 }
