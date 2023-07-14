@@ -3,6 +3,7 @@
 package gateway
 
 import (
+	convertService "api-gateway/conversion-service/kitex_gen/conversion"
 	"api-gateway/global"
 	"api-gateway/hertz-http-server/biz/model/conversion"
 	"api-gateway/hertz-http-server/biz/model/length"
@@ -92,7 +93,24 @@ func ConvertCase(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(conversion.ConversionResponse)
+	convertClient, err := utils.GenerateClient("ConversionService")
+	if err != nil {
+		panic(err)
+	}
+
+	reqRpc := &convertService.ConversionRequest{
+		InputString: req.InputString,
+	}
+
+	var respRpc convertService.ConversionResponse
+	err = utils.MakeRpcRequest(ctx, convertClient, "convertCase", reqRpc, &respRpc)
+	if err != nil {
+		panic(err)
+	}
+
+	resp := &conversion.ConversionResponse{
+		ConvertedString: respRpc.ConvertedString,
+	}
 
 	c.JSON(consts.StatusOK, resp)
 }
