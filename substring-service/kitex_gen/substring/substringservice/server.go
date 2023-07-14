@@ -2,12 +2,12 @@
 package substringservice
 
 import (
-	api "api-gateway/substring-service/kitex_gen/substring/api"
+	substring "api-gateway/substring-service/kitex_gen/substring"
 	server "github.com/cloudwego/kitex/server"
 )
 
 // NewServer creates a server.Server with the given handler and options.
-func NewServer(handler api.SubstringService, opts ...server.Option) server.Server {
+func NewServer(handler substring.SubstringService, opts ...server.Option) server.Server {
 	var options []server.Option
 
 	options = append(options, opts...)

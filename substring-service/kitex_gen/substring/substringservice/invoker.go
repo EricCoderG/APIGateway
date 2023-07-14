@@ -3,12 +3,12 @@
 package substringservice
 
 import (
-	api "api-gateway/substring-service/kitex_gen/substring/api"
+	substring "api-gateway/substring-service/kitex_gen/substring"
 	server "github.com/cloudwego/kitex/server"
 )
 
 // NewInvoker creates a server.Invoker with the given handler and options.
-func NewInvoker(handler api.SubstringService, opts ...server.Option) server.Invoker {
+func NewInvoker(handler substring.SubstringService, opts ...server.Option) server.Invoker {
 	var options []server.Option
 
 	options = append(options, opts...)

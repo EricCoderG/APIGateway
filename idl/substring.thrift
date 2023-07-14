@@ -1,4 +1,4 @@
-namespace go substring.api
+namespace go substring
 
 struct SubstringRequest {
     1: required string mainString;

@@ -11,6 +11,7 @@ import (
 	"api-gateway/hertz-http-server/biz/model/substring/api"
 	lengthService "api-gateway/length-service/kitex_gen/length"
 	reverseService "api-gateway/reverse-service/kitex_gen/reverse"
+	substringService "api-gateway/substring-service/kitex_gen/substring"
 	"api-gateway/utils"
 	"context"
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -126,7 +127,25 @@ func FindSubstring(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(api.SubstringResponse)
+	substringClient, err := utils.GenerateClient("SubstringService")
+	if err != nil {
+		panic(err)
+	}
+
+	reqRpc := &substringService.SubstringRequest{
+		MainString: req.MainString,
+		SubString:  req.SubString,
+	}
+
+	var respRpc substringService.SubstringResponse
+	err = utils.MakeRpcRequest(ctx, substringClient, "findSubstring", reqRpc, &respRpc)
+	if err != nil {
+		panic(err)
+	}
+
+	resp := &substringService.SubstringResponse{
+		Positions: respRpc.Positions,
+	}
 
 	c.JSON(consts.StatusOK, resp)
 }

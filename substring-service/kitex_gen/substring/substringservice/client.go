@@ -3,7 +3,7 @@
 package substringservice
 
 import (
-	api "api-gateway/substring-service/kitex_gen/substring/api"
+	substring "api-gateway/substring-service/kitex_gen/substring"
 	"context"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
@@ -11,7 +11,7 @@ import (
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	FindSubstring(ctx context.Context, req *api.SubstringRequest, callOptions ...callopt.Option) (r *api.SubstringResponse, err error)
+	FindSubstring(ctx context.Context, req *substring.SubstringRequest, callOptions ...callopt.Option) (r *substring.SubstringResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -43,7 +43,7 @@ type kSubstringServiceClient struct {
 	*kClient
 }
 
-func (p *kSubstringServiceClient) FindSubstring(ctx context.Context, req *api.SubstringRequest, callOptions ...callopt.Option) (r *api.SubstringResponse, err error) {
+func (p *kSubstringServiceClient) FindSubstring(ctx context.Context, req *substring.SubstringRequest, callOptions ...callopt.Option) (r *substring.SubstringResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.FindSubstring(ctx, req)
 }

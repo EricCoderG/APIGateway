@@ -3,7 +3,7 @@
 package substringservice
 
 import (
-	api "api-gateway/substring-service/kitex_gen/substring/api"
+	substring "api-gateway/substring-service/kitex_gen/substring"
 	"context"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
@@ -17,12 +17,12 @@ var substringServiceServiceInfo = NewServiceInfo()
 
 func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "SubstringService"
-	handlerType := (*api.SubstringService)(nil)
+	handlerType := (*substring.SubstringService)(nil)
 	methods := map[string]kitex.MethodInfo{
 		"findSubstring": kitex.NewMethodInfo(findSubstringHandler, newSubstringServiceFindSubstringArgs, newSubstringServiceFindSubstringResult, false),
 	}
 	extra := map[string]interface{}{
-		"PackageName": "api",
+		"PackageName": "substring",
 	}
 	svcInfo := &kitex.ServiceInfo{
 		ServiceName:     serviceName,
@@ -36,9 +36,9 @@ func NewServiceInfo() *kitex.ServiceInfo {
 }
 
 func findSubstringHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*api.SubstringServiceFindSubstringArgs)
-	realResult := result.(*api.SubstringServiceFindSubstringResult)
-	success, err := handler.(api.SubstringService).FindSubstring(ctx, realArg.Req)
+	realArg := arg.(*substring.SubstringServiceFindSubstringArgs)
+	realResult := result.(*substring.SubstringServiceFindSubstringResult)
+	success, err := handler.(substring.SubstringService).FindSubstring(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
@@ -46,11 +46,11 @@ func findSubstringHandler(ctx context.Context, handler interface{}, arg, result 
 	return nil
 }
 func newSubstringServiceFindSubstringArgs() interface{} {
-	return api.NewSubstringServiceFindSubstringArgs()
+	return substring.NewSubstringServiceFindSubstringArgs()
 }
 
 func newSubstringServiceFindSubstringResult() interface{} {
-	return api.NewSubstringServiceFindSubstringResult()
+	return substring.NewSubstringServiceFindSubstringResult()
 }
 
 type kClient struct {
@@ -63,10 +63,10 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) FindSubstring(ctx context.Context, req *api.SubstringRequest) (r *api.SubstringResponse, err error) {
-	var _args api.SubstringServiceFindSubstringArgs
+func (p *kClient) FindSubstring(ctx context.Context, req *substring.SubstringRequest) (r *substring.SubstringResponse, err error) {
+	var _args substring.SubstringServiceFindSubstringArgs
 	_args.Req = req
-	var _result api.SubstringServiceFindSubstringResult
+	var _result substring.SubstringServiceFindSubstringResult
 	if err = p.c.Call(ctx, "findSubstring", &_args, &_result); err != nil {
 		return
 	}
