@@ -1,4 +1,4 @@
-namespace go length.api
+namespace go length
 
 struct LengthRequest {
     1: required string inputString;
@@ -6,7 +6,6 @@ struct LengthRequest {
 
 struct LengthResponse {
     1: required i32 length;
-    2: required string msg;
 }
 
 service LengthService {

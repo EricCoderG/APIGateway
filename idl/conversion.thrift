@@ -1,4 +1,4 @@
-namespace go conversion.api
+namespace go conversion
 
 struct CaseConversionRequest {
     1: required string inputString;
@@ -6,7 +6,6 @@ struct CaseConversionRequest {
 
 struct CaseConversionResponse {
     1: required string convertedString;
-    2: required string msg;
 }
 
 service CaseConversionService {

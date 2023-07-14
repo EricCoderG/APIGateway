@@ -7,7 +7,6 @@ struct SubstringRequest {
 
 struct SubstringResponse {
     1: required list<i32> positions;
-    2: required string msg;
 }
 
 service SubstringService {

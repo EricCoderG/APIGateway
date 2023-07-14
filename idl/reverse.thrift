@@ -1,4 +1,4 @@
-namespace go reverse.api
+namespace go reverse
 
 struct ReverseRequest {
     1: required string inputString;
@@ -6,7 +6,6 @@ struct ReverseRequest {
 
 struct ReverseResponse {
     1: required string reversedString;
-    2: required string msg;
 }
 
 service ReverseService {
