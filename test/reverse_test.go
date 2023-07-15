@@ -7,9 +7,9 @@ import (
 	"testing"
 )
 
-func BenchmarkLength(b *testing.B) {
-	url := "http://127.0.0.1:8088/length"
-	jsonStr := `{"inputString":"6666345345345435"}`
+func BenchmarkReverse(b *testing.B) {
+	url := "http://127.0.0.1:8088/reverse"
+	jsonStr := `{"inputString":"123456"}`
 	for i := 0; i < b.N; i++ {
 		resp, err := http.Post(url, "application/json", bytes.NewBuffer([]byte(jsonStr)))
 		if err != nil {
@@ -26,9 +26,9 @@ func BenchmarkLength(b *testing.B) {
 	}
 }
 
-func BenchmarkLengthParallel(b *testing.B) {
-	url := "http://127.0.0.1:8088/length"
-	jsonStr := `{"inputString":"6666345345345435"}`
+func BenchmarkReverseParallel(b *testing.B) {
+	url := "http://127.0.0.1:8088/reverse"
+	jsonStr := `{"inputString":"123456"}`
 	b.SetParallelism(4)
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {

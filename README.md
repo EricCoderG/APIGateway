@@ -38,7 +38,41 @@ sh sh/clean.sh
 
 ## 运行测试
 
+### Length 服务
 ```shell
-ab -n 10000 -c 10 -T 'application/x-www-form-urlencoded' -p test/data/length_post_data "http://127.0.0.1:8088/length"
+go test -bench=. test/length_test.go
 ```
+
+```shell
+ab -n 10000 -c 10 -T 'application/x-www-form-urlencoded' -p test/data/length.data "http://127.0.0.1:8088/length"
+```
+
+### Conversion服务
+
+```shell
+go test -bench=. test/conversion_test.go
+```
+```shell
+ab -n 1000 -c 10 -T 'application/x-www-form-urlencoded' -p test/data/conversion.data "http://127.0.0.1:8088/convert"
+```
+
+### Substring服务
+
+```shell
+go test -bench=. test/substring_test.go
+```
+```shell
+ab -n 1000 -c 10 -T 'application/x-www-form-urlencoded' -p test/data/substring.data "http://127.0.0.1:8088/substring"
+```
+
+### Reverse服务
+
+```shell
+go test -bench=. test/reverse_test.go
+```
+```shell
+ab -n 1000 -c 10 -T 'application/x-www-form-urlencoded' -p test/data/reverse.data "http://127.0.0.1:8088/reverse"
+```
+
+
 

@@ -14,8 +14,6 @@ import (
 	substringService "api-gateway/substring-service/kitex_gen/substring"
 	"api-gateway/utils"
 	"context"
-	"github.com/cloudwego/kitex/pkg/klog"
-
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
@@ -37,7 +35,6 @@ func CalculateLength(ctx context.Context, c *app.RequestContext) {
 	}
 
 	var respRpc lengthService.LengthResponse
-	klog.Info(global.LengthCli)
 	err = utils.MakeRpcRequest(ctx, global.LengthCli, "calculateLength", reqRpc, &respRpc)
 	if err != nil {
 		panic(err)
