@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io/ioutil"
 	"net/http"
+	"runtime"
 	"testing"
 )
 
@@ -29,7 +30,7 @@ func BenchmarkLength(b *testing.B) {
 func BenchmarkLengthParallel(b *testing.B) {
 	url := "http://127.0.0.1:8088/length"
 	jsonStr := `{"inputString":"6666345345345435"}`
-	b.SetParallelism(4)
+	runtime.GOMAXPROCS(8)
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			resp, err := http.Post(url, "application/json", bytes.NewBuffer([]byte(jsonStr)))

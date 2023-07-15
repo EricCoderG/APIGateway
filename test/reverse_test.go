@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io/ioutil"
 	"net/http"
+	"runtime"
 	"testing"
 )
 
@@ -29,7 +30,7 @@ func BenchmarkReverse(b *testing.B) {
 func BenchmarkReverseParallel(b *testing.B) {
 	url := "http://127.0.0.1:8088/reverse"
 	jsonStr := `{"inputString":"123456"}`
-	b.SetParallelism(4)
+	runtime.GOMAXPROCS(8)
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			resp, err := http.Post(url, "application/json", bytes.NewBuffer([]byte(jsonStr)))
