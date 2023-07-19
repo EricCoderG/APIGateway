@@ -35,7 +35,12 @@ func CalculateLength(ctx context.Context, c *app.RequestContext) {
 	}
 
 	var respRpc lengthService.LengthResponse
-	err = utils.MakeRpcRequest(ctx, global.LengthCli, "calculateLength", reqRpc, &respRpc)
+	pool := global.ClientPool{}
+	lengthClient, err := pool.GetClient("LengthService")
+	if err != nil {
+		panic(err)
+	}
+	err = utils.MakeRpcRequest(ctx, lengthClient, "calculateLength", reqRpc, &respRpc)
 	if err != nil {
 		panic(err)
 	}
@@ -58,7 +63,8 @@ func ReverseString(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	reverseClient, err := utils.GenerateClient("ReverseService")
+	pool := global.ClientPool{}
+	reverseClient, err := pool.GetClient("ReverseService")
 	if err != nil {
 		panic(err)
 	}
@@ -91,7 +97,8 @@ func ConvertCase(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	convertClient, err := utils.GenerateClient("ConversionService")
+	pool := global.ClientPool{}
+	convertClient, err := pool.GetClient("ConversionService")
 	if err != nil {
 		panic(err)
 	}
@@ -124,7 +131,8 @@ func FindSubstring(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	substringClient, err := utils.GenerateClient("SubstringService")
+	pool := global.ClientPool{}
+	substringClient, err := pool.GetClient("SubstringService")
 	if err != nil {
 		panic(err)
 	}
